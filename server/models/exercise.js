@@ -9,4 +9,4 @@ var Exercise = new Schema({
 
 
 module.exports = mongoose.model('exercise', Exercise);
-mongoose.connect('mongodb://localhost/02-crud-assessment');
+// mongoose.connect('mongodb://localhost/02-crud-assessment');
