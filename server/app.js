@@ -6,7 +6,8 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var swig = require('swig');
-
+var http = require('http');
+var mongoose = require('mongoose');
 
 // *** routes *** //
 var routes = require('./routes/index.js');
