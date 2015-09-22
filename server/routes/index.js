@@ -16,8 +16,24 @@ router.get('/exercises', function(req, res, next) {
   });
 });
 
-router.post('/exercise/:id', function(req, res, next){
+router.post('/exercises', function(req, res, next){
+  var newExercise = new Exercise ({
+    name: req.body.name,
+    description: req.body.description,
+    tags: [req.body.tags]
+  });
+  newExercise.save(function(err){
+    if (err){
+      res.json({'Error': err});
+    } else {
+      res.json({'Success': newExercise});
+    }
+  });
+});
 
-})
+
 
 module.exports = router;
+
+//tags array will need to be split: test[0].split(",")
+
