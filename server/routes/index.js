@@ -16,4 +16,8 @@ router.get('/exercises', function(req, res, next) {
   });
 });
 
+router.post('/exercise/:id', function(req, res, next){
+
+})
+
 module.exports = router;
