@@ -50,14 +50,38 @@ describe('Exercises', function() {
     });
   });
 
-  it('should list a SINGLE exercise on /exercise/<id> GET');
+  it('should list a SINGLE exercise on /exercise/<id> GET', function(done){
+    var testExercise = new Exercise ({
+      name: 'crud',
+      description: 'a crud app',
+      tags: ['javascript, server']
+    });
+    testExercise.save(function(err, data){
+      chai.request(server)
+      .get('/exercise/'+data.id)
+      .end(function(err, res){
+        res.should.have.status(200);
+        res.should.be.json;
+        res.body.should.be.a('object');
+        res.body.should.have.property('_id');
+        res.body.should.have.property('name');
+        res.body.should.have.property('description');
+        res.body.should.have.property('tags');
+        res.body.tags.should.be.a('array');
+        res.body.name.should.equal('crud');
+        res.body.description.should.equal('a crud app');
+        res.body._id.should.equal(data.id);
+        expect(res.body.tags).to.have.members(['javascript, server']);
+        done();
+      });
+    });
+  });
 
   it('should add a SINGLE exercise on /exercises POST', function(done){
     chai.request(server)
     .post('/exercises')
     .send({'name': 'Chess', 'description': 'a game of kings', 'tags': 'strategy, board game'})
     .end(function(err, res){
-      console.log(res.body);
       res.should.have.status(200);
       res.should.be.json;
       res.body.should.be.a('object');

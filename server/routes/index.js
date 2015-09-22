@@ -16,6 +16,16 @@ router.get('/exercises', function(req, res, next) {
   });
 });
 
+router.get('/exercise/:id', function(req, res, next){
+  Exercise.findById(req.params.id, function(err, data){
+    if (err){
+      res.json({'Error': err});
+    } else {
+      res.json(data);
+    }
+  });
+});
+
 router.post('/exercises', function(req, res, next){
   var newExercise = new Exercise ({
     name: req.body.name,
