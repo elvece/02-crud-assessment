@@ -41,6 +41,18 @@ router.post('/exercises', function(req, res, next){
   });
 });
 
+router.put('/exercise/:id', function(req, res, next){
+  var id = {"_id": req.params.id};
+  var update = req.body;
+  var options = {new: true};
+  Exercise.findOneAndUpdate(id, update, options, function (err, data){
+    if (err){
+      res.json({'Error': err});
+    } else {
+      res.json({'Updated': data});
+    }
+  });
+});
 
 
 module.exports = router;

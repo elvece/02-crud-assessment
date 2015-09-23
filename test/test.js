@@ -67,10 +67,10 @@ describe('Exercises', function() {
         res.body.should.have.property('name');
         res.body.should.have.property('description');
         res.body.should.have.property('tags');
-        res.body.tags.should.be.a('array');
         res.body.name.should.equal('crud');
         res.body.description.should.equal('a crud app');
         res.body._id.should.equal(data.id);
+        res.body.tags.should.be.a('array');
         expect(res.body.tags).to.have.members(['javascript, server']);
         done();
       });
@@ -90,18 +90,47 @@ describe('Exercises', function() {
       res.body.Success.should.have.property('name');
       res.body.Success.should.have.property('description');
       res.body.Success.should.have.property('tags');
-      res.body.Success.tags.should.be.a('array');
       res.body.Success.should.have.property('_id');
       res.body.Success.name.should.equal('Chess');
       res.body.Success.description.should.equal('a game of kings');
+      res.body.Success.tags.should.be.a('array');
       expect(res.body.Success.tags).to.have.members(['strategy, board game']);
       done();
     });
   });
 
-  it('should update a SINGLE exercise on /exercise/<id> PUT');
+  it('should update a SINGLE exercise on /exercise/<id> PUT', function(done){
+    chai.request(server)
+    //need to get exercise added in beforeEach hook
+    .get('/exercises')
+    .end(function(err, res){
+      chai.request(server)
+      .put('/exercise/'+res.body[0]._id)
+      .send({'name': '99 bottles of beer'})
+      .end(function(err, res){
+        console.log('res.body:'+res.body);
+        res.should.have.status(200);
+        res.should.be.json;
+        res.body.should.be.a('object');
+        res.body.should.have.property('Updated');
+        res.body.Updated.should.be.a('object');
+        res.body.Updated.should.have.property('name');
+        res.body.Updated.should.have.property('description');
+        res.body.Updated.should.have.property('tags');
+        res.body.Updated.should.have.property('_id');
+        res.body.Updated.name.should.equal('99 bottles of beer');
+        res.body.Updated.description.should.equal('print 99 bottles of beer on the wall with code');
+        res.body.Updated.tags.should.be.a('array');
+        expect(res.body.Updated.tags).to.have.members(['javascript, functions']);
+        done();
+      });
+    });
+  });
 
-  it('should delete a SINGLE exercise on /exercise/<id> DELETE');
+  // it('should delete a SINGLE exercise on /exercise/<id> DELETE', function(done){
+  //   done();
+  // });
+
 });
 
 
