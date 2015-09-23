@@ -1,9 +1,11 @@
+process.env.NODE_ENV = 'development';
+
 var express = require('express');
 var router = express.Router();
 var Exercise = require('../models/exercise');
 
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: 'g11 Exercises' });
 });
 
 router.get('/exercises', function(req, res, next) {
