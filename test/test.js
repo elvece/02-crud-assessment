@@ -108,7 +108,6 @@ describe('Exercises', function() {
       .put('/exercise/'+res.body[0]._id)
       .send({'name': '99 bottles of beer'})
       .end(function(err, res){
-        console.log('res.body:'+res.body);
         res.should.have.status(200);
         res.should.be.json;
         res.body.should.be.a('object');
@@ -127,10 +126,25 @@ describe('Exercises', function() {
     });
   });
 
-  // it('should delete a SINGLE exercise on /exercise/<id> DELETE', function(done){
-  //   done();
-  // });
-
+  it('should delete a SINGLE exercise on /exercise/<id> DELETE', function(done){
+    chai.request(server)
+    .get('/exercises')
+    .end(function(err, res){
+      chai.request(server)
+      .delete('/exercise/'+res.body[0]._id)
+      .end(function(err, res){
+        res.should.have.status(200);
+        res.should.be.json;
+        res.body.should.be.a('object');
+        res.body.should.have.property('Removed');
+        res.body.Removed.should.be.a('object');
+        res.body.Removed.should.have.property('name');
+        res.body.Removed.should.have.property('_id');
+        res.body.Removed.name.should.equal('99 bottles');
+        done();
+      });
+    });
+  });
 });
 
 

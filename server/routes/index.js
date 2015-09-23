@@ -41,6 +41,19 @@ router.post('/exercises', function(req, res, next){
   });
 });
 
+//why not working with syntax like blobs?
+// Exercise.findById(req.params.id, function(err, data) {
+//   data.name = req.body.name;
+//   data.description = req.body.description;
+//   data.tags = req.body.tags;
+//   data.save(function(err) {
+//     if(err) {
+//       res.json({'Error': err});
+//     } else {
+//       res.json({'Updated': data});
+//     }
+//   });
+// });
 router.put('/exercise/:id', function(req, res, next){
   var id = {"_id": req.params.id};
   var update = req.body;
@@ -50,6 +63,22 @@ router.put('/exercise/:id', function(req, res, next){
       res.json({'Error': err});
     } else {
       res.json({'Updated': data});
+    }
+  });
+});
+
+router.delete('/exercise/:id', function(req, res, next){
+  Exercise.findById(req.params.id, function(err, data) {
+    if (err) {
+      res.json({'Error': err});
+    } else {
+      data.remove(function(err){
+        if (err) {
+          res.json({'Error': err});
+        } else {
+          res.json({'Removed': data});
+        }
+      });
     }
   });
 });
