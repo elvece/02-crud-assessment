@@ -38,7 +38,7 @@ router.post('/exercises', function(req, res, next){
     if (err){
       res.json({'Error': err});
     } else {
-      res.json({'Success': newExercise});
+      res.json({'Success': newExercise, Message: 'Exercise was successfully added!'});
     }
   });
 });
@@ -64,7 +64,7 @@ router.put('/exercise/:id', function(req, res, next){
     if (err){
       res.json({'Error': err});
     } else {
-      res.json({'Updated': data});
+      res.json({'Updated': data, Message: 'Exercise was successfully updated!'});
     }
   });
 });
@@ -78,7 +78,7 @@ router.delete('/exercise/:id', function(req, res, next){
         if (err) {
           res.json({'Error': err});
         } else {
-          res.json({'Removed': data});
+          res.json({'Removed': data, Message: 'Exercise was successfully deleted!'});
         }
       });
     }
