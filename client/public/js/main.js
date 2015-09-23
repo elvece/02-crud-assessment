@@ -44,17 +44,16 @@ $('form').on('submit', function(e){
   });
 });
 
-// //open edit modal and set field values
-// $(document).on('click', '.edit-button', function(){
-//   $('#message').hide();
-//   $.get('/hike/'+$(this).attr('id'), function(data){
-//     $('#edit-exercise-name').val(data.Name);
-//     $('#edit-exercise-description').val(data.Location);
-//     $('#edit-exercise-tags').val(data.Difficulty);
-//     $('#edit-hike-duration').val(data.Duration);
-//     $('.save-changes').attr('id', data._id);
-//   });
-// });
+//open edit modal and set field values
+$(document).on('click', '.edit-button', function(){
+  $('#message').hide();
+  $.get('/exercise/'+$(this).attr('id'), function(data){
+    $('#edit-exercise-name').val(data.name);
+    $('#edit-exercise-description').val(data.description);
+    $('#edit-exercise-tags').val(data.tags);
+    $('.save-changes').attr('id', data._id);
+  });
+});
 
 // //PUT - update hike in db
 // //if nothing changed in edit modal form...do not display success message
