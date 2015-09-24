@@ -8,15 +8,17 @@ $(document).on('ready', function() {
 function renderExercises(){
   $.get('/exercises', function(data){
     for (var i = 0; i < data.length; i++) {
-      $('#all-exercises').append(
-        '<tr>'+
-          '<td>'+data[i].name+'</td>'+
-          '<td>'+data[i].description+'</td>'+
-          '<td>'+data[i].tags+'</td>'+
-          '<td><a class="btn btn-primary btn-xs edit-button" data-toggle="modal" data-target="#edit-modal" id="'+data[i]._id+'" role="button">Edit</a>'+
-          '&nbsp;<a class="btn btn-danger btn-xs delete-button" data-toggle="modal" data-target="#delete-modal" id="'+data[i]._id+'" role="button">Delete</a></td'+
-        '</tr>'
-      );
+      for (var j = 0; j < data[i].tags.length; j++) {
+        $('#all-exercises').append(
+          '<tr>'+
+            '<td>'+data[i].name+'</td>'+
+            '<td>'+data[i].description+'</td>'+
+            '<td>'+data[i].tags[j]+'</td>'+
+            '<td><a class="btn btn-primary btn-xs edit-button" data-toggle="modal" data-target="#edit-modal" id="'+data[i]._id+'" role="button">Edit</a>'+
+            '&nbsp;<a class="btn btn-danger btn-xs delete-button" data-toggle="modal" data-target="#delete-modal" id="'+data[i]._id+'" role="button">Delete</a></td'+
+          '</tr>'
+        );
+      }
     }
   });
 }
@@ -27,17 +29,22 @@ $('form').on('submit', function(e){
 
   var $exerciseName = $('#exercise-name').val();
   var $exerciseDescription = $('#exercise-description').val();
-  var $exerciseTags = $('#exercise-tags').val();
+  var $exerciseTags = $('#exercise-tags').tagsinput('items');
+  console.log('$exerciseTags: '+$exerciseTags);
 
   var payload = {
     name: $exerciseName,
     description: $exerciseDescription,
     tags: $exerciseTags,
   };
+  console.log('Payload:'+payload);
+  console.log('Payload.tags: '+payload.tags);
+
 
   $.post('/exercises', payload, function(data){
     $('#message').html(data.Message);
     $(':input', 'form').val('');
+    $('#exercise-tags').tagsinput('removeAll');
     $('#all-exercises').html("");
     $('#message').show();
     renderExercises();
@@ -55,37 +62,36 @@ $(document).on('click', '.edit-button', function(){
   });
 });
 
-// //PUT - update hike in db
-// //if nothing changed in edit modal form...do not display success message
-// // $('#edit-modal').one('change', ':input', function() {
-// //only works on first time...why???
-//   $(document).on('click', '.save-changes', function(){
+//PUT - update exercise in db
+//TO FIX:
+//if nothing changed in edit modal form...do not display success message
+// $('#edit-modal').one('change', ':input', function() {
+//only works on first time...why???
+  $(document).on('click', '.save-changes', function(){
 
-//     var $updatedName = $('#edit-exercise-name').val();
-//     var $updatedLocation = $('#edit-exercise-description').val();
-//     var $updatedDifficulty = $('#edit-exercise-tags').val();
-//     var $updatedDuration = $('#edit-hike-duration').val();
+    var $updatedName = $('#edit-exercise-name').val();
+    var $updatedDescription = $('#edit-exercise-description').val();
+    var $updatedTags = $('#edit-exercise-tags').val();
 
-//     var payload = {
-//       Name: $updatedName,
-//       Location: $updatedLocation,
-//       Difficulty: $updatedDifficulty,
-//       Duration: $updatedDuration
-//     };
+    var payload = {
+      name: $updatedName,
+      description: $updatedDescription,
+      Tags: $updatedTags,
+    };
 
-//     $.ajax({
-//       method: 'PUT',
-//       url: 'hike/'+$(this).attr('id'),
-//       data: payload
-//     })
-//     .done(function(data){
-//       $('#message').html(data.Message);
-//       $('#all-hikes').html("");
-//       $('#message').show();
-//       renderExercises();
-//     });
-//   });
-// // });
+    $.ajax({
+      method: 'PUT',
+      url: '/exercise/'+$(this).attr('id'),
+      data: payload
+    })
+    .done(function(data){
+      $('#message').html(data.Message);
+      $('#all-exercises').html("");
+      $('#message').show();
+      renderExercises();
+    });
+  });
+// });
 
 // //open delete modal and sets yes button attribute to hike id
 // $(document).on('click', '.delete-button', function(){

@@ -80,7 +80,7 @@ describe('Exercises', function() {
   it('should add a SINGLE exercise on /exercises POST', function(done){
     chai.request(server)
     .post('/exercises')
-    .send({'name': 'Chess', 'description': 'a game of kings', 'tags': 'strategy, board game'})
+    .send({'name': 'Chess', 'description': 'a game of kings', 'tags': ['strategy', 'board game', 'logic']})
     .end(function(err, res){
       res.should.have.status(200);
       res.should.be.json;
@@ -94,7 +94,7 @@ describe('Exercises', function() {
       res.body.Success.name.should.equal('Chess');
       res.body.Success.description.should.equal('a game of kings');
       res.body.Success.tags.should.be.a('array');
-      expect(res.body.Success.tags).to.have.members(['strategy, board game']);
+      expect(res.body.Success.tags).to.have.members(['strategy', 'board game', 'logic']);
       done();
     });
   });
