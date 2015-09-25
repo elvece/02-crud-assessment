@@ -8,17 +8,16 @@ $(document).on('ready', function() {
 function renderExercises(){
   $.get('/exercises', function(data){
     for (var i = 0; i < data.length; i++) {
-      for (var j = 0; j < data[i].tags.length; j++) {
-        $('#all-exercises').append(
-          '<tr>'+
-            '<td>'+data[i].name+'</td>'+
-            '<td>'+data[i].description+'</td>'+
-            '<td>'+data[i].tags[j]+'</td>'+
-            '<td><a class="btn btn-primary btn-xs edit-button" data-toggle="modal" data-target="#edit-modal" id="'+data[i]._id+'" role="button">Edit</a>'+
-            '&nbsp;<a class="btn btn-danger btn-xs delete-button" data-toggle="modal" data-target="#delete-modal" id="'+data[i]._id+'" role="button">Delete</a></td'+
-          '</tr>'
-        );
-      }
+      console.log(data[i].tags[0].split(','));
+      $('#all-exercises').append(
+        '<tr>'+
+          '<td>'+data[i].name+'</td>'+
+          '<td>'+data[i].description+'</td>'+
+          '<td>'+data[i].tags+'</td>'+
+          '<td><a class="btn btn-primary btn-xs edit-button" data-toggle="modal" data-target="#edit-modal" id="'+data[i]._id+'" role="button">Edit</a>'+
+          '&nbsp;<a class="btn btn-danger btn-xs delete-button" data-toggle="modal" data-target="#delete-modal" id="'+data[i]._id+'" role="button">Delete</a></td'+
+        '</tr>'
+      );
     }
   });
 }
@@ -29,17 +28,17 @@ $('form').on('submit', function(e){
 
   var $exerciseName = $('#exercise-name').val();
   var $exerciseDescription = $('#exercise-description').val();
-  var $exerciseTags = $('#exercise-tags').tagsinput('items');
-  console.log('$exerciseTags: '+$exerciseTags);
+  // var $exerciseTags = $('#exercise-tags').tagsinput('items');
+  var $exerciseTags = $('#exercise-tags').val();
+  console.log($exerciseTags);
 
   var payload = {
     name: $exerciseName,
     description: $exerciseDescription,
     tags: $exerciseTags,
   };
-  console.log('Payload:'+payload);
-  console.log('Payload.tags: '+payload.tags);
-
+  console.log(payload);
+  console.log(payload.tags);
 
   $.post('/exercises', payload, function(data){
     $('#message').html(data.Message);
