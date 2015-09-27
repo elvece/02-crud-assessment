@@ -8,7 +8,7 @@ $(document).on('ready', function() {
 function renderExercises(){
   $.get('/exercises', function(data){
     for (var i = 0; i < data.length; i++) {
-      console.log(data[i].tags[0].split(','));
+      console.log(data[i].tags);
       $('#all-exercises').append(
         '<tr>'+
           '<td>'+data[i].name+'</td>'+
@@ -30,7 +30,7 @@ $('form').on('submit', function(e){
   var $exerciseDescription = $('#exercise-description').val();
   // var $exerciseTags = $('#exercise-tags').tagsinput('items');
   var $exerciseTags = $('#exercise-tags').val();
-  console.log($exerciseTags);
+  console.log($exerciseTags[0].split(','));
 
   var payload = {
     name: $exerciseName,
