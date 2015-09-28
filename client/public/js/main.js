@@ -92,24 +92,24 @@ $(document).on('click', '.edit-button', function(){
   });
 // });
 
-// //open delete modal and sets yes button attribute to hike id
-// $(document).on('click', '.delete-button', function(){
-//   $('#message').hide();
-//   $.get('/hike/'+$(this).attr('id'), function(data){
-//     $('.yes-delete').attr('id', data._id);
-//   });
-// });
+//open delete modal and sets yes button attribute to hike id
+$(document).on('click', '.delete-button', function(){
+  $('#message').hide();
+  $.get('/exercise/'+$(this).attr('id'), function(data){
+    $('.yes-delete').attr('id', data._id);
+  });
+});
 
-// //DELETE - delete hike from dom and db
-// $(document).on('click', '.yes-delete', function(){
-//   $.ajax({
-//     method: 'DELETE',
-//     url: '/hike/'+$(this).attr('id'),
-//   })
-//   .done(function(data){
-//     $('#message').html(data.Message);
-//     $('#all-hikes').html("");
-//     $('#message').show();
-//     renderExercises();
-//   });
-// });
+//DELETE - delete hike from dom and db
+$(document).on('click', '.yes-delete', function(){
+  $.ajax({
+    method: 'DELETE',
+    url: '/exercise/'+$(this).attr('id'),
+  })
+  .done(function(data){
+    $('#message').html(data.Message);
+    $('#all-exercises').html("");
+    $('#message').show();
+    renderExercises();
+  });
+});
