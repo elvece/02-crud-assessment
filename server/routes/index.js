@@ -34,8 +34,6 @@ router.post('/exercises', function(req, res, next){
     description: req.body.description,
     tags: req.body.tags
   });
-  console.log(req.body);
-  console.log(newExercise.tags);
   newExercise.save(function(err){
     if (err){
       res.json({'Error': err});

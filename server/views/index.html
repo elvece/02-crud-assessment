@@ -6,12 +6,51 @@
 
   <div class="container">
 
-    <h1>{{ title }}</h1>
-    <p> Add exercises to {{ title }} using the following form:</p>
+    <h1>Welcome to {{ title }}</h1>
+    <br>
+    <p>Use this page to add, edit, and delete exercises completed during the course of the g11 Full Stack Web Development Program.</p>
+    <br>
+    <button type="submit" class="btn btn-success text-center" id="add-exercise" data-toggle="modal" data-target="#add-modal">Add Exercises</button>
 
     <br>
 
-    <form class="form-horizontal">
+    <!-- add exercise modal -->
+    <div id="add-modal" class="modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Add Exercise</h4>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="exercise-name" class="control-label">Name:</label>
+              <div class="">
+                <input type="text" class="form-control" id="add-exercise-name" placeholder="" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="exercise-description" class="control-label">Description:</label>
+              <div class="">
+                <input type="text" class="form-control" id="add-exercise-description" placeholder="" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="exercise-tags" class="control-label">Tags:</label>
+              <div class="">
+                <input type="text" class="form-control" data-role="tagsinput" id="add-exercise-tags" placeholder="" required>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            <button type="button" data-dismiss="modal" class="btn btn-primary" id="save-exercise">Save</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+<!--     <form class="form-horizontal">
       <div class="form-group">
         <label for="exercise-name" class="col-sm-2 control-label">Name:</label>
         <div class="col-sm-10">
@@ -35,7 +74,7 @@
           <button type="submit" class="btn btn-success">Save</button>
         </div>
       </div>
-    </form>
+    </form> -->
 
     <hr><br>
 

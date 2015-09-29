@@ -2,47 +2,55 @@
 $(document).on('ready', function() {
   renderExercises();
   $('#message').hide();
+  $('#exercise-table').hide();
 });
 
 //helper function to render exercises
 function renderExercises(){
   $.get('/exercises', function(data){
     for (var i = 0; i < data.length; i++) {
-      $('#all-exercises').append(
-        '<tr>'+
-          '<td>'+data[i].name+'</td>'+
-          '<td>'+data[i].description+'</td>'+
-          '<td>'+data[i].tags+'</td>'+
-          '<td><a class="btn btn-primary btn-xs edit-button" data-toggle="modal" data-target="#edit-modal" id="'+data[i]._id+'" role="button">Edit</a>'+
-          '&nbsp;<a class="btn btn-danger btn-xs delete-button" data-toggle="modal" data-target="#delete-modal" id="'+data[i]._id+'" role="button">Delete</a></td'+
-        '</tr>'
-      );
-    }
+
+      // var tags = data[i].tags[0].split(',');
+
+      // for (var j = 0; j < tags.length; j++) {
+      //   var tagsDisplay = '<p>'+tags[j]+'</p>';
+
+        $('#all-exercises').append(
+          '<tr>'+
+            '<td>'+data[i].name+'</td>'+
+            '<td>'+data[i].description+'</td>'+
+            '<td>'+data[i].tags+'</td>'+
+            '<td><a class="btn btn-primary btn-xs edit-button" data-toggle="modal" data-target="#edit-modal" id="'+data[i]._id+'" role="button">Edit</a>'+
+            '&nbsp;<a class="btn btn-danger btn-xs delete-button" data-toggle="modal" data-target="#delete-modal" id="'+data[i]._id+'" role="button">Delete</a></td'+
+          '</tr>'
+        );
+      }
+    // }
   });
 }
 
 //POST - add new exercise to db from form submit
-$('form').on('submit', function(e){
+$('document').on('click', '#save-exercise', function(e){
   e.preventDefault();
 
-  var $exerciseName = $('#exercise-name').val();
-  var $exerciseDescription = $('#exercise-description').val();
+  var $exerciseName = $('#add-exercise-name').val();
+  var $exerciseDescription = $('#add-exercise-description').val();
   // var $exerciseTags = $('#exercise-tags').tagsinput('items');
-  var $exerciseTags = $('#exercise-tags').val();
+  var $exerciseTags = $('#add-exercise-tags').val();
 
   var payload = {
     name: $exerciseName,
     description: $exerciseDescription,
     tags: $exerciseTags,
   };
-
   $.post('/exercises', payload, function(data){
     $('#message').html(data.Message);
     $(':input', 'form').val('');
-    $('#exercise-tags').tagsinput('removeAll');
+    $('#add-exercise-tags').tagsinput('removeAll');
     $('#all-exercises').html("");
     $('#message').show();
     renderExercises();
+    $('#exercise-table').show();
   });
 });
 
