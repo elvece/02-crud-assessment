@@ -29,8 +29,13 @@ function renderExercises(){
   });
 }
 
-//POST - add new exercise to db from form submit
-$('document').on('click', '#save-exercise', function(e){
+//toggle all exercises table
+$('#show-all').on('click', function(){
+  $('#exercise-table').toggle('show');
+});
+
+//POST - add new exercise to db from modal submit
+$(document).on('click', '#save-exercise', function(e){
   e.preventDefault();
 
   var $exerciseName = $('#add-exercise-name').val();
@@ -45,12 +50,12 @@ $('document').on('click', '#save-exercise', function(e){
   };
   $.post('/exercises', payload, function(data){
     $('#message').html(data.Message);
-    $(':input', 'form').val('');
+    $(':input', '#add-modal').val('');
     $('#add-exercise-tags').tagsinput('removeAll');
     $('#all-exercises').html("");
     $('#message').show();
-    renderExercises();
     $('#exercise-table').show();
+    renderExercises();
   });
 });
 

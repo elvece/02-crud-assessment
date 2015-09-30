@@ -5,13 +5,16 @@
 {% block content %}
 
   <div class="container">
-
-    <h1>Welcome to {{ title }}</h1>
-    <br>
-    <p>Use this page to add, edit, and delete exercises completed during the course of the g11 Full Stack Web Development Program.</p>
-    <br>
-    <button type="submit" class="btn btn-success text-center" id="add-exercise" data-toggle="modal" data-target="#add-modal">Add Exercises</button>
-
+    <div class="row text-center">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>Welcome to {{ title }}</h1>
+        <br>
+        <p>Use this page to add, edit, and delete exercises completed during the course of the g11 Full Stack Web Development Program.</p>
+        <br>
+        <button type="submit" class="btn btn-success" id="add-exercise" data-toggle="modal" data-target="#add-modal">Add Exercises</button>
+        <button type="submit" class="btn btn-success" id="show-all">Show All</button>
+      </div>
+    </div>
     <br>
 
     <!-- add exercise modal -->
@@ -83,7 +86,7 @@
 
     <!-- all exercises table -->
     <div id="exercise-table">
-      <h2>All Exercises:</h2>
+<!--       <h2>All Exercises:</h2> -->
         <div>
           <table class="table table-hover table-responsive">
             <thead>
