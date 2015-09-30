@@ -1,3 +1,4 @@
+//TO DO: get tags working properly
 
 $(document).on('ready', function() {
   renderExercises();
